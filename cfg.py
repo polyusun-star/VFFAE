@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn.functional as F
 from torchvision import transforms
@@ -68,7 +67,7 @@ class CLIPFeaturePredictor:
     # ------------------------------------------------
     #                MAIN PREDICTION
     # ------------------------------------------------
-    def predict(self, imgA):
+    def encode(self, imgA):
         imgA = self.preprocess(imgA)
 
         with torch.no_grad():
@@ -79,5 +78,47 @@ class CLIPFeaturePredictor:
 
             z_cA, z_sA, _, _ = self.projector(clip_featA)
 
-        return z_cA, z_sA# return decomposed vectors as CFG condition
+        return z_cA + z_sA# return decomposed vectors as CFG condition for training
 
+    def replace(self, imgA, imgB, attribute):
+        """
+        imgA: original image (img_o)
+        imgB: reference image (img_r)
+        attribute: one of ['style', 'structure', 'none']
+        """
+
+        imgA = self.preprocess(imgA)
+        imgB = self.preprocess(imgB)
+
+        with torch.no_grad():
+            # Encode images with CLIP
+            featA = self.clip_model.encode_image(imgA)
+            featB = self.clip_model.encode_image(imgB)
+
+            featA = F.normalize(featA, dim=-1)
+            featB = F.normalize(featB, dim=-1)
+
+            # Project CLIP features into structure and style spaces
+            z_cA, z_sA, _, _ = self.projector(featA)  # original image
+            z_cB, z_sB, _, _ = self.projector(featB)  # reference image
+
+        # ---------- Retrieval-based attribute replacement ----------
+        if attribute == "style":
+            # replace style only
+            z_c = z_cA
+            z_s = z_sB
+
+        elif attribute == "structure":
+            # replace structure only
+            z_c = z_cB
+            z_s = z_sA
+
+        else:
+            # no replacement
+            z_c = z_cA
+            z_s = z_sA
+
+        # Construct edited latent representation
+        z_star = z_c + z_s
+
+        return z_star# Replace the conditional vector according task requirement for testing
