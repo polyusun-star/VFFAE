@@ -1,7 +1,3 @@
-
-
-
-
 # VFFAE: Vision-Guided Fashion Fine-Grained Attribute Editing via Semantic Segmentation and Disentangled Representation
 
 This repository provides the official implementation of **VFFAE**, a unified framework for fashion image attribute editing. The framework consists of three main components:
@@ -25,9 +21,11 @@ Please ensure that a CUDA-enabled GPU and a compatible PyTorch version are insta
 ```
 
 ## 2. FFAS: Fashion Fine-grained Attribute Segmentation
+
 FFAS is designed to generate precise attribute-level segmentation masks guided by textual prompts.
 
 2.1 Training FFAS
+
 To train the FFAS model, simply run:
 
 ```bash
@@ -37,7 +35,7 @@ Training Dataset
 FFAS is trained on the Fashionpedia dataset.
 
 Dataset homepage:
-https://fashionpedia.github.io/
+https://fashionpedia.github.io/home/
 
 Please download the dataset and organize it as follows:
 
@@ -54,6 +52,7 @@ fashionpedia/
 You may modify the dataset paths in FFAS_train.py if needed.
 
 2.2 Testing FFAS
+
 To generate attribute masks using a trained FFAS model:
 
 bash
@@ -68,6 +67,7 @@ mask_dir = "your output mask directory"
 ```
 
 2.3 Pretrained FFAS Model
+
 We provide a pretrained FFAS model for convenience:
 
 FFAS pretrained weights:
@@ -79,10 +79,12 @@ Please place the downloaded weights into the checkpoints/ directory before runni
 checkpoints/FFAS_best_model.pth
 ```
 
-3. FSSD: ashion Style–Structure Disentanglemen
+3. FSSD: Fashion Style–Structure Disentanglement
+
 FSSD aims to disentangle content and style representations from CLIP-based visual features.
 
 3.1 Training FSSD
+
 To train the FSSD model, run:
 
 ```bash
@@ -101,6 +103,7 @@ data/FashionVCdata/
 You can replace this dataset with any custom fashion image collection.
 
 3.2 Testing FSSD
+
 To test content–style decomposition and feature swapping:
 
 ```bash
@@ -114,9 +117,11 @@ img2 = load_image("path_to_image_2", ...)
 ```
 
 4. Training the Full Framework
+
 The complete VFFAE framework integrates FFAS, FSSD, and a diffusion-based generation model for attribute editing.
 
 4.1 Training
+
 To train the full framework, run:
 
 ```bash
@@ -131,8 +136,10 @@ python -u main.py \
 --scale_lr False
 ```
 You can adjust training settings in: configs/v1.yaml
-The pretrained model for fine-tuning can be download here: 
+The pretrained model for fine-tuning can be download here: https://drive.google.com/file/d/1JJYfouSK7nC5IKQkxNVGfCk2t5EpD2Ub/view?usp=drive_link
+
 4.2 Testing / Inference
+
 To perform attribute editing inference, run:
 
 ```bash
@@ -149,20 +156,16 @@ python scripts/inference.py \
 --image_path examples/image/origin.png \
 --reference_path examples/reference/reference.png
 ```
-This will generate edited results using an input image, a reference image. The input attribute should be "style", "structure", or empty.
+This will generate edited results using an input image, a reference image. The input attribute should be "style", "structure", or empty. 
 
-4.3 Pretrained Full Model
-We also release pretrained weights for the complete framework:
-
-Full framework checkpoint:
-🔗 [Download link here]
+You can use the trained weights for testing, or use the model weights that we plan to release after the paper is published.
 
 Please place the checkpoint at:
-
-text
-Copy code
+```bash
 checkpoints/model.ckpt
+```
 5. Acknowledgements
+
 This repository is developed based on the following open-source projects:
 
 Paint by Example
