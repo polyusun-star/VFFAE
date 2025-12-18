@@ -79,7 +79,7 @@ Please place the downloaded weights into the checkpoints/ directory before runni
 checkpoints/FFAS_best_model.pth
 ```
 
-3. FSSD: Fashion Style–Structure Disentanglement
+## 3. FSSD: Fashion Style–Structure Disentanglement
 
 FSSD aims to disentangle content and style representations from CLIP-based visual features.
 
@@ -116,7 +116,7 @@ img1 = load_image("path_to_image_1", ...)
 img2 = load_image("path_to_image_2", ...)
 ```
 
-4. Training the Full Framework
+## 4. Training the Full Framework
 
 The complete VFFAE framework integrates FFAS, FSSD, and a diffusion-based generation model for attribute editing.
 
@@ -156,7 +156,6 @@ python scripts/inference.py \
 --image_path examples/image/origin.png \
 --reference_path examples/reference/reference.png
 ```
-This will generate edited results using an input image, a reference image. The input attribute should be "style", "structure", or empty. 
 
 In the paper, we introduce a natural-language template to describe the editing task:
 
@@ -182,6 +181,7 @@ Therefore, in practice, users only need to specify:
 ```bash
 --target_region "bag"
 --attribute "style"
+```
 
 You can use the trained weights for testing, or use the model weights that we plan to release after the paper is published.
 
@@ -189,7 +189,7 @@ Please place the checkpoint at:
 ```bash
 checkpoints/model.ckpt
 ```
-5. Acknowledgements
+## 5. Acknowledgements
 
 This repository is developed based on the following open-source projects:
 
