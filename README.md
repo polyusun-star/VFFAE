@@ -159,9 +159,7 @@ python scripts/inference.py \
 
 In the paper, we introduce a natural-language template to describe the editing task:
 
-Change/Replace/Edit the <style/structure/none> of the <target region text> to the reference.
-
-Here we clarify that this template serves **only as a conceptual and user-facing interface**, rather than a model-level conditioning design. 
+"Change/Replace/Edit the <style/structure/none> of the <target region text> to the reference."
 
 This template is introduced to illustrate the semantics of the editing task and to unify different attribute editing scenarios in a human-readable way.
 
