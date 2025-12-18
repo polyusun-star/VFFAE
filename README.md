@@ -162,7 +162,6 @@ In the paper, we introduce a natural-language template to describe the editing t
 "Change/Replace/Edit the <style/structure/none> of the <target region text> to the reference."
 
 This template is introduced to illustrate the semantics of the editing task and to unify different attribute editing scenarios in a human-readable way.
-
 In the actual implementation, the framework only relies on two minimal inputs:
 
 1. **Target region text (`target_region`)**  
