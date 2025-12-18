@@ -158,6 +158,31 @@ python scripts/inference.py \
 ```
 This will generate edited results using an input image, a reference image. The input attribute should be "style", "structure", or empty. 
 
+In the paper, we introduce a natural-language template to describe the editing task:
+
+Change/Replace/Edit the <style/structure/none> of the <target region text> to the reference.
+
+Here we clarify that this template serves **only as a conceptual and user-facing interface**, rather than a model-level conditioning design. 
+
+This template is introduced to illustrate the semantics of the editing task and to unify different attribute editing scenarios in a human-readable way.
+
+In the actual implementation, the framework only relies on two minimal inputs:
+
+1. **Target region text (`target_region`)**  
+   - This text is encoded by CLIP and is used **only for open-vocabulary semantic segmentation** (FFAS).
+   - It is fully free-form (e.g., `"collar"`, `"neck area"`, `"front neckline"`).
+
+2. **Attribute type (`attribute`)**  
+   - The input attribute should be "style", "structure", or empty. 
+   - This input is **not encoded by CLIP** and does not affect any text embedding.
+   - It acts as a **retrieval key** that selects the corresponding attribute disentanglement branch in FSSD. (seen in cfg.py)
+
+Therefore, in practice, users only need to specify:
+
+```bash
+--target_region "bag"
+--attribute "style"
+
 You can use the trained weights for testing, or use the model weights that we plan to release after the paper is published.
 
 Please place the checkpoint at:
